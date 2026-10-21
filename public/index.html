@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Shortener</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="card">
+    <h1>URL Shortener</h1>
+    <p class="subtitle">Shorten your long links instantly</p>
+
+    <form id="shortenForm">
+      <div class="input-group">
+        <input type="url" id="longUrl" placeholder="Paste a long URL here..." required>
+        <button type="submit">Shorten URL</button>
+      </div>
+    </form>
+
+    <div id="result" class="result hidden"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

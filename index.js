@@ -22,6 +22,7 @@ redis.on('error', (err) => {
 });
 
 app.use(express.json());
+app.use(express.static('public'));
 
 function generateShortCode(length = 7) {
   const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
