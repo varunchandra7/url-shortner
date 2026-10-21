@@ -55,6 +55,24 @@ app.post('/api/shorten', async (req, res) => {
   }
 });
 
+app.get('/:shortCode', async (req, res) => {
+  try {
+    const { shortCode } = req.params;
+    const link = await prisma.link.findUnique({
+      where: { shortCode },
+    });
+
+    if (!link) {
+      return res.status(404).json({ error: 'Short URL not found' });
+    }
+
+    return res.redirect(301, link.originalUrl);
+  } catch (error) {
+    console.error('Error redirecting short code:', error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
