@@ -1,13 +1,58 @@
 const express = require('express');
+const { PrismaClient } = require('@prisma/client');
+const crypto = require('crypto');
 
+const prisma = new PrismaClient();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-app.post('/api/shorten', (req, res) => {
-  const { originalUrl } = req.body;
-  res.json({ shortUrl: 'xyz1234' });
+function generateShortCode(length = 7) {
+  const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let result = '';
+  const bytes = crypto.randomBytes(length);
+  for (let i = 0; i < length; i++) {
+    result += chars[bytes[i] % chars.length];
+  }
+  return result;
+}
+
+app.post('/api/shorten', async (req, res) => {
+  try {
+    const { originalUrl } = req.body;
+    if (!originalUrl) {
+      return res.status(400).json({ error: 'originalUrl is required' });
+    }
+
+    let shortCode;
+    let isUnique = false;
+    let attempts = 0;
+
+    while (!isUnique && attempts < 10) {
+      shortCode = generateShortCode(7);
+      const existing = await prisma.link.findUnique({ where: { shortCode } });
+      if (!existing) {
+        isUnique = true;
+      }
+      attempts++;
+    }
+
+    const link = await prisma.link.create({
+      data: {
+        shortCode,
+        originalUrl,
+      },
+    });
+
+    res.json({
+      shortCode: link.shortCode,
+      originalUrl: link.originalUrl,
+    });
+  } catch (error) {
+    console.error('Error shortening URL:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
 app.listen(PORT, () => {
