@@ -10,7 +10,7 @@
 
 ---
 
-## 📐 Architecture & System Design
+##  Architecture & System Design
 
 This service uses a high-throughput, low-latency architecture optimized for high-concurrency read workloads using the **Cache-Aside pattern**.
 
@@ -43,7 +43,7 @@ This service uses a high-throughput, low-latency architecture optimized for high
 
 ---
 
-## ✨ Key Features
+##  Key Features
 
 - **Unique Short Code Generation:** Generates unique 7-character Base62 codes (`[a-zA-Z0-9]`).
 - **High-Performance Redirects:** Sub-2ms HTTP 301 permanent redirects via Upstash Redis.
@@ -54,7 +54,7 @@ This service uses a high-throughput, low-latency architecture optimized for high
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 - **Runtime:** Node.js (v18+)
 - **Framework:** Express.js
@@ -65,7 +65,7 @@ This service uses a high-throughput, low-latency architecture optimized for high
 
 ---
 
-## 🔑 Environment Variables
+##  Environment Variables
 
 Create a `.env` file in the root directory containing:
 
@@ -77,7 +77,7 @@ Create a `.env` file in the root directory containing:
 
 ---
 
-## 🚀 Local / Codespaces Setup Instructions
+##  Local / Codespaces Setup Instructions
 
 ### Prerequisites
 * Node.js (v18 or higher)
@@ -99,9 +99,8 @@ Create a `.env` file in the root directory containing:
 3. **Configure environment variables:**
    Create a `.env` file in the root directory:
    ```env
-   DATABASE_URL="postgresql://neondb_owner:npg_jQsmyzug0i6V@ep-morning-lab-b4gp3dw0-pooler.c-6.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
-   REDIS_URL="redis://default:gQAAAAAAASeAAAIgcDFhNzRhY2EyMThkOTk0NWNkOWRiYjE2NTk0MjcwYTJjNQ@subtle-ferret-75648.upstash.io:6379"
-   ```
+    DATABASE_URL="postgresql://user:password@host/dbname?sslmode=require"' > .env.example
+    REDIS_URL="rediss://default:password@host:port"' >> .env.example
 
 4. **Generate Prisma Client and push database schema:**
    ```bash
@@ -117,7 +116,7 @@ Create a `.env` file in the root directory containing:
 
 ---
 
-## 📚 API Documentation
+##  API Documentation
 
 ### 1. Shorten URL
 Creates a shortened URL mapping for a given long URL.
