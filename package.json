@@ -1,0 +1,25 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "A lightweight, high-performance URL shortener built with Node.js and Express. Designed with modern system design practices to handle high concurrency using caching and relational database storage.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/varunchandra7/url-shortner.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/varunchandra7/url-shortner/issues"
+  },
+  "homepage": "https://github.com/varunchandra7/url-shortner#readme",
+  "dependencies": {
+    "express": "^5.3.0"
+  }
+}
