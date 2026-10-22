@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const shortenForm = document.getElementById('shortenForm');
   const longUrlInput = document.getElementById('longUrl');
   const resultDiv = document.getElementById('result');
+  const shortUrlInput = document.getElementById('shortUrlInput');
+  const copyBtn = document.getElementById('copyBtn');
 
   shortenForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -24,19 +26,38 @@ document.addEventListener('DOMContentLoaded', () => {
         const shortCode = data.shortCode;
         const fullShortUrl = `${window.location.origin}/${shortCode}`;
 
-        resultDiv.innerHTML = `
-          <p>Your Short URL:</p>
-          <a href="${fullShortUrl}" target="_blank" id="shortUrlLink">${fullShortUrl}</a>
-        `;
+        shortUrlInput.value = fullShortUrl;
         resultDiv.classList.remove('hidden');
       } else {
-        resultDiv.innerHTML = `<p class="error-message">Error: ${data.error || 'Failed to shorten URL'}</p>`;
-        resultDiv.classList.remove('hidden');
+        alert(`Error: ${data.error || 'Failed to shorten URL'}`);
       }
     } catch (error) {
       console.error('Fetch error:', error);
-      resultDiv.innerHTML = `<p class="error-message">Error connecting to server.</p>`;
-      resultDiv.classList.remove('hidden');
+      alert('Error connecting to server.');
+    }
+  });
+
+  copyBtn.addEventListener('click', async () => {
+    const urlToCopy = shortUrlInput.value;
+    if (!urlToCopy) return;
+
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(urlToCopy);
+      } else {
+        shortUrlInput.select();
+        document.execCommand('copy');
+      }
+
+      copyBtn.textContent = 'Copied!';
+      copyBtn.classList.add('copied');
+
+      setTimeout(() => {
+        copyBtn.textContent = 'Copy';
+        copyBtn.classList.remove('copied');
+      }, 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
     }
   });
 });
