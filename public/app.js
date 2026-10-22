@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const resultDiv = document.getElementById('result');
   const shortUrlInput = document.getElementById('shortUrlInput');
   const copyBtn = document.getElementById('copyBtn');
+  const openLink = document.getElementById('openLink');
 
   shortenForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -23,10 +24,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await response.json();
 
       if (response.ok) {
-        const shortCode = data.shortCode;
-        const fullShortUrl = `${window.location.origin}/${shortCode}`;
+        const fullShortUrl = data.shortUrl || `${window.location.origin}/${data.shortCode}`;
 
         shortUrlInput.value = fullShortUrl;
+        openLink.href = fullShortUrl;
+        openLink.textContent = `Open Link (${fullShortUrl}) ↗`;
+
         resultDiv.classList.remove('hidden');
       } else {
         alert(`Error: ${data.error || 'Failed to shorten URL'}`);
